@@ -1,425 +1,489 @@
-📌 AUTOMAÇÃO DE TAREFAS 📌
+Automatização de Tarefas 📌
 
-Sobre o projeto:
+Este é um aplicativo desktop para gerenciamento e organização de
+tarefas, desenvolvido em Python utilizando a biblioteca gráfica
+Tkinter. O sistema transforma solicitações escritas em linguagem
+natural em tarefas organizadas, identificando automaticamente
+informações como responsável, prazo, prioridade e categoria.
 
-Automação de Tarefas é um sistema desenvolvido em Python para facilitar a criação e o gerenciamento de tarefas.
+O projeto utiliza SQLite para persistência local dos dados, JSON
+para importação e exportação das tarefas e Faker para geração
+automática de dados de teste.
 
-O sistema recebe uma solicitação escrita pelo usuário e identifica automaticamente informações importantes, como responsável, prazo, prioridade, categoria e status da tarefa.
+────────
 
-Exemplo
+🛠️ Tecnologias Utilizadas
 
-Uma solicitação como:
+• Python 3 — linguagem principal do projeto
+• Tkinter — construção da interface gráfica desktop
+• ttk — componentes visuais adicionais, como a tabela de tarefas
+• SQLite3 — banco de dados local para armazenamento das tarefas
+• JSON — importação e exportação de dados
+• Faker — geração automática de tarefas fictícias para testes
+• re (Regex) — identificação de informações dentro das
+solicitações
+• datetime / date / timedelta — tratamento e cálculo de datas
 
-O Ivan precisa preparar o relatório para o cliente até sexta. É urgente.
+────────
 
-pode ser transformada automaticamente em:
+🚀 Funcionalidades do Sistema
 
-Responsável: Ivan
-Prazo: sexta-feira
-Prioridade: ALTA
-Categoria: DOCUMENTOS
-Status: PENDENTE
+📝 Criação de tarefas por linguagem natural
 
-Objetivo
-
-O objetivo do projeto é automatizar a organização de tarefas, reduzindo a necessidade de preencher manualmente todas as informações de cada tarefa.
-
-⸻
-
-Funcionalidades ⚙
-
-O sistema permite:
-
-* Criar tarefas a partir de solicitações escritas;
-* Identificar automaticamente o responsável;
-* Identificar o prazo;
-* Identificar a prioridade;
-* Identificar a categoria;
-* Definir o status da tarefa;
-* Listar tarefas cadastradas;
-* Pesquisar tarefas;
-* Concluir tarefas;
-* Excluir tarefas;
-* Visualizar estatísticas;
-* Exportar tarefas para JSON;
-* Importar tarefas de arquivos JSON;
-* Gerar tarefas fictícias para testes utilizando Faker;
-* Armazenar as tarefas em um banco de dados SQLite.
-
-⸻
-
-Versões do projeto
-
-O projeto possui duas versões de utilização.
-
-Interface gráfica
-
-A versão gráfica foi desenvolvida utilizando Tkinter.
-
-Ela possui:
-
-* Dashboard;
-* Criação de novas solicitações;
-* Lista de tarefas;
-* Pesquisa de tarefas;
-* Conclusão de tarefas;
-* Exclusão de tarefas;
-* Estatísticas;
-* Importação e exportação de dados;
-* Geração de dados de teste com Faker.
-
-Interface CLI
-
-A versão CLI funciona diretamente pelo terminal.
-
-O menu possui as seguintes opções:
-
-1. Nova solicitação
-2. Minhas tarefas
-3. Concluir tarefa
-4. Excluir tarefa
-5. Estatísticas
-6. Exportar JSON
-7. Importar JSON
-8. Gerar dados com Faker
-9. Sair
-
-⸻
-
-Como funciona 🛠
-
-O funcionamento do sistema segue o seguinte fluxo:
-
-Solicitação escrita
-        ↓
-Análise do texto
-        ↓
-Identificação das informações
-        ↓
-Criação da tarefa
-        ↓
-Armazenamento no SQLite
-        ↓
-Visualização e gerenciamento
-
-O sistema utiliza expressões regulares (Regex) e regras de identificação para analisar a solicitação e encontrar as informações necessárias.
-
-⸻
-
-Identificação do responsável
-
-O sistema procura nomes dentro da solicitação e utiliza essa informação para definir o responsável pela tarefa.
+O usuário pode escrever uma solicitação normalmente, sem precisar
+preencher vários campos manualmente.
 
 Exemplo:
 
-A Beatriz precisa enviar o relatório para o cliente.
+> “O Ivan precisa preparar o relatório para o cliente até sexta. É
+> urgente.”
 
-Resultado:
+O sistema interpreta a frase e transforma automaticamente a solicitação
+em uma tarefa estruturada.
 
-Responsável:Beatriz
+🤖 Identificação automática de informações
 
-Caso nenhum responsável seja identificado:
+Durante a interpretação da solicitação, o sistema tenta identificar:
 
-Responsável: Não definido
+• Responsável
+• Prazo
+• Prioridade
+• Categoria
+• Título
+• Data de criação
+• Status inicial
 
-⸻
+Caso alguma informação não seja encontrada, o sistema utiliza valores
+padrão como “Não definido”.
 
-Identificação do prazo
+👤 Identificação do responsável
 
-O sistema reconhece diferentes formas de informar uma data ou prazo.
+O sistema utiliza expressões regulares (Regex) para reconhecer
+diferentes formas de indicar quem deverá realizar uma tarefa.
 
-Entre elas:
+Exemplos de padrões reconhecidos:
 
-* Hoje;
-* Amanhã;
-* Dias da semana;
-* Datas completas;
-* Datas no formato 20/09/2026;
-* Datas no formato 20-09-2026;
-* Datas como 20/09;
-* Expressões como até dia 20;
-* Expressões como até sexta;
-* Expressões como 20 de setembro.
+• “responsável é João”
+• “João precisa fazer…”
+• “tarefa para João”
+• “preciso que João faça…”
+• “é para João”
 
-Caso nenhum prazo seja identificado:
+📅 Identificação de prazos
 
-Prazo: Não definido
+O sistema reconhece diferentes formatos de prazo, incluindo:
 
-⸻
+• hoje
+• amanhã
+• 25/09/2026
+• 25-09-2026
+• 25/09
+• até dia 25
+• dias da semana, como segunda, terça, sexta
+• datas escritas, como 10 de outubro
 
-Identificação da prioridade
+O sistema calcula a data correspondente utilizando a data atual do
+computador.
 
-A prioridade é identificada através de palavras presentes na solicitação.
+🚦 Classificação automática de prioridade
 
-Prioridade alta
+A prioridade é definida com base em palavras encontradas na solicitação.
 
-Alguns exemplos de palavras utilizadas:
+ALTA - urgente - urgência - imediato - imediatamente - agora -
+crítico - pra ontem - o quanto antes
 
-urgente
-imediatamente
-agora
-crítico
-pra ontem
-o quanto antes
+MÉDIA - importante - prioridade - atenção
 
-Prioridade média
+Quando nenhuma dessas palavras é encontrada, a tarefa recebe prioridade
+BAIXA.
 
-Alguns exemplos:
+🗂️ Classificação automática por categoria
 
-importante
-prioridade
-atenção
+O sistema identifica categorias com base no conteúdo da solicitação:
 
-Prioridade baixa
+• DOCUMENTOS
+• REUNIÃO
+• CLIENTE / VENDAS
+• FINANCEIRO
+• TECNOLOGIA
+• GERAL
 
-Quando nenhuma indicação de prioridade alta ou média é encontrada, a tarefa recebe prioridade:
+📊 Dashboard / Visão geral
 
-BAIXA
+A tela inicial apresenta um resumo das tarefas cadastradas, contendo:
 
-⸻
+• Total de tarefas
+• Tarefas pendentes
+• Tarefas concluídas
+• Tarefas de alta prioridade
 
-Identificação da categoria
+Também exibe as tarefas mais recentes e permite criar uma nova
+solicitação diretamente pelo dashboard.
 
-O sistema também identifica a categoria da tarefa através de palavras relacionadas ao conteúdo da solicitação.
+📋 Gerenciamento de tarefas
 
-As categorias utilizadas incluem:
+Na seção Minhas tarefas, é possível:
 
-DOCUMENTOS
-REUNIÃO
-CLIENTE / VENDAS
-FINANCEIRO
-TECNOLOGIA
-GERAL
+• Visualizar todas as tarefas cadastradas
+• Pesquisar tarefas
+• Consultar responsável
+• Consultar prazo
+• Consultar prioridade
+• Consultar categoria
+• Consultar status
+• Consultar data de criação
+• Marcar uma tarefa como concluída
+• Excluir uma tarefa
 
-Caso nenhuma categoria específica seja identificada, a tarefa recebe:
+🔎 Pesquisa de tarefas
 
-GERAL
+A tabela possui um campo de busca que filtra as tarefas em tempo real
+conforme o usuário digita.
 
-⸻
+A pesquisa considera os dados presentes na tarefa, permitindo localizar
+registros por diferentes informações.
 
-Status das tarefas
+✅ Conclusão de tarefas
 
-Toda nova tarefa é criada inicialmente como:
-
-PENDENTE
-
-Quando o usuário conclui uma tarefa, seu status é alterado para:
+Uma tarefa selecionada pode ser marcada como:
 
 CONCLUÍDA
 
-⸻
+O status é atualizado diretamente no banco de dados SQLite.
 
-Banco de dados
+🗑️ Exclusão de tarefas
 
-O projeto utiliza SQLite para armazenar as tarefas.
+O usuário pode excluir uma tarefa selecionada. Antes da exclusão, o
+sistema apresenta uma confirmação para evitar remoções acidentais.
 
-O banco de dados é criado automaticamente com o nome:
+📤 Exportação para JSON
+
+As tarefas cadastradas podem ser exportadas para um arquivo:
+
+tarefas.json
+
+O arquivo contém informações como:
+
+• ID
+• Título
+• Responsável
+• Prazo
+• Prioridade
+• Categoria
+• Status
+• Data de criação
+
+📥 Importação de JSON
+
+O sistema permite selecionar um arquivo .json e importar as tarefas
+novamente para o banco de dados.
+
+A importação também possui valores padrão para campos ausentes no
+arquivo.
+
+🧪 Geração de dados com Faker
+
+A seção Dados & automação possui uma função para gerar
+automaticamente 5 tarefas de teste.
+
+Os nomes dos responsáveis são criados utilizando o Faker configurado
+para português do Brasil:
+
+Faker("pt_BR")
+
+As datas também são geradas automaticamente dentro de um período de até
+30 dias.
+
+────────
+
+🗃️ Banco de Dados
+
+O sistema utiliza um banco de dados SQLite chamado:
 
 tarefas.db
 
-As principais informações armazenadas são:
+A tabela principal utilizada pelo aplicativo é:
 
-Campo	Descrição
-ID	Identificador da tarefa
-Texto original	Solicitação digitada pelo usuário
-Título	Título da tarefa
-Responsável	Pessoa responsável
-Prazo	Data limite da tarefa
-Prioridade	Prioridade da tarefa
-Categoria	Categoria da tarefa
-Status	Situação da tarefa
-Criada em	Data e hora de criação
+tarefas
 
-⸻
+Estrutura da tabela
 
-Importação e exportação JSON
+Campo              Tipo      Descrição
 
-O sistema permite exportar as tarefas cadastradas para um arquivo JSON.
+────────
 
-Também é possível importar tarefas de um arquivo JSON para o banco de dados.
+id               INTEGER   Identificador único da tarefa
+texto_original   TEXT      Solicitação original digitada pelo usuário
+titulo           TEXT      Título gerado para a tarefa
+responsavel      TEXT      Pessoa responsável pela tarefa
+prazo            TEXT      Prazo identificado
+prioridade       TEXT      Prioridade da tarefa
+categoria        TEXT      Categoria identificada
+status           TEXT      Status atual da tarefa
+criada_em        TEXT      Data e hora de criação
 
-Essa funcionalidade permite salvar e transportar os dados das tarefas.
+O campo id é configurado como chave primária com incremento
+automático.
 
-⸻
+────────
 
-Faker
+🧠 Fluxo de funcionamento
 
-O projeto utiliza a biblioteca Faker para gerar dados fictícios.
+O funcionamento principal do sistema segue este fluxo:
 
-Essa funcionalidade é utilizada para testes e permite criar automaticamente tarefas sem precisar cadastrar cada uma manualmente.
+```text
+┌───────────────────────────────┐
+│ Usuário escreve uma solicitação│
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│        interpretar()          │
+└───────────────┬───────────────┘
+                ↓
+      ┌─────────┼─────────┐
+      ↓         ↓         ↓
+ Responsável  Prazo   Prioridade
+      │         │         │
+      └─────────┼─────────┘
+                ↓
+          Categoria
+                ↓
+┌───────────────────────────────┐
+│     Tarefa estruturada        │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│      Banco SQLite             │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│ Dashboard / Tabela / JSON     │
+└───────────────────────────────┘
+```
 
-⸻
+────────
 
-Tecnologias utilizadas
+📂 Estrutura Completa de Caminhos e Arquivos
 
-Tecnologia	Utilização
-Python	Linguagem principal
-Tkinter	Desenvolvimento da interface gráfica
-SQLite	Armazenamento das tarefas
-JSON	Importação e exportação dos dados
-Regex (re)	Identificação de informações no texto
-datetime	Manipulação de datas e horários
-Faker	Geração de dados fictícios para testes
+A estrutura principal do projeto pode ser organizada da seguinte forma:
 
-⸻
-
-Instalação
-
-É necessário ter o Python instalado.
-
-Depois, instale a biblioteca Faker:
-
-pip install Faker
-
-As demais bibliotecas utilizadas no projeto fazem parte da biblioteca padrão do Python ou acompanham o Tkinter.
-
-⸻
-
-Como executar
-
-Interface gráfica
-
-Salve o código da versão Tkinter em um arquivo .py.
-
-Por exemplo:
-
-app.py
-
-Execute pelo terminal:
-
-python app.py
-
-Interface CLI
-
-Salve o código da versão de terminal em um arquivo .py.
-
-Por exemplo:
-
-cli.py
-
-Execute:
-
-python cli.py
-
-⸻
-
-Estrutura do projeto
-
-Uma estrutura possível para os arquivos é:
-
-Automacao-de-Tarefas/
+```text
+📁 caixa-de-entrada-acao/
 │
-├── app.py
-├── cli.py
-├── tarefas.db
-├── tarefas.json
-└── README.md
+├── 🐍 tarefas.py
+│   └── Código-fonte principal do sistema
+│
+├── 🗃️ tarefas.db
+│   └── Banco de dados SQLite criado automaticamente pelo programa
+│
+└── 📄 README.md
+    └── Documentação do projeto
+```
 
-O arquivo tarefas.db é criado automaticamente durante a execução do sistema.
+Estrutura após execução
 
-O arquivo tarefas.json é criado quando as tarefas são exportadas.
+Ao executar o programa pela primeira vez, o arquivo do banco de dados é
+criado automaticamente:
 
-⸻
+```text
+📁 projeto/
+│
+├── 🐍 tarefas.py
+├── 🗃️ tarefas.db
+└── 📄 README.md
+```
 
-Exemplo de utilização
+O banco não precisa ser criado manualmente, pois a função
+criar_banco() verifica se a tabela existe e cria a estrutura
+necessária.
 
-Solicitação
+────────
 
-A Maria precisa enviar a proposta para o cliente até sexta. É urgente.
+▶️ Como Executar
 
-Informações identificadas
+1. Instale o Python
 
-Responsável: Maria
-Prazo: sexta-feira
-Prioridade: ALTA
-Categoria: CLIENTE / VENDAS
-Status: PENDENTE
+É necessário possuir o Python 3 instalado no computador.
 
-A tarefa fica armazenada no banco de dados e pode ser posteriormente consultada, concluída ou excluída.
+2. Instale a dependência externa
 
-⸻
+O projeto utiliza a biblioteca Faker.
 
-Fluxo de utilização
+No terminal:
 
-1. Usuário escreve uma solicitação
-              ↓
-2. Sistema analisa o texto
-              ↓
-3. Sistema identifica responsável
-              ↓
-4. Sistema identifica prazo
-              ↓
-5. Sistema identifica prioridade
-              ↓
-6. Sistema identifica categoria
-              ↓
-7. Tarefa é criada
-              ↓
-8. Tarefa é armazenada no SQLite
-              ↓
-9. Usuário pode gerenciar a tarefa
+```bash
+pip install Faker
+```
 
-⸻
+O Tkinter e o SQLite3 fazem parte da distribuição padrão do Python em
+instalações comuns.
 
-Conceitos de programação utilizados
+3. Execute o programa
 
-Durante o desenvolvimento do projeto foram utilizados conceitos como:
+No terminal, dentro da pasta do projeto:
 
-* Funções;
-* Variáveis;
-* Estruturas condicionais;
-* Laços de repetição;
-* Manipulação de strings;
-* Expressões regulares;
-* Manipulação de datas;
-* Banco de dados;
-* Operações CRUD;
-* Arquivos JSON;
-* Interface gráfica;
-* Interface de terminal;
-* Bibliotecas externas;
-* Geração de dados para testes.
+```bash
+python tarefas.py
+```
 
-⸻
+A janela do sistema será aberta automaticamente.
 
-Limitações
+────────
 
-A identificação das informações é realizada através de regras e padrões definidos no código, e não por um modelo de inteligência artificial.
+💾 Persistência dos Dados
 
-Por isso, solicitações que utilizem palavras ou estruturas muito diferentes das previstas podem não ter todas as informações identificadas.
+Os dados ficam armazenados localmente no arquivo:
 
-Quando uma informação não é encontrada, o sistema utiliza valores padrão, como:
+```text
+tarefas.db
+```
 
-Responsável: Não definido
-Prazo: Não definido
-Prioridade: BAIXA
-Categoria: GERAL
-Status: PENDENTE
+Isso significa que as tarefas continuam disponíveis depois que o
+aplicativo é fechado e aberto novamente.
 
-⸻
+O SQLite é utilizado diretamente pelo Python através do módulo:
 
-📌 CONCLUÇÃO 📌
+```python
+import sqlite3
+```
 
-A Automação de Tarefas busca facilitar a organização e o gerenciamento de atividades através da automatização da criação de tarefas.
+────────
 
-A partir de uma simples solicitação escrita, o sistema consegue identificar informações relevantes e armazená-las de forma estruturada, permitindo que as tarefas sejam posteriormente consultadas, organizadas e concluídas.
+📦 Importação e Exportação
 
-O projeto demonstra a aplicação prática de Python, SQLite, Tkinter, JSON, Regex e Faker em um sistema de automação e gerenciamento de tarefas.
+O sistema utiliza dois formatos principais de armazenamento:
 
+SQLite
 
+Responsável pelo armazenamento permanente das tarefas durante o uso
+normal do aplicativo.
 
+JSON
 
+Responsável pela transferência e backup das tarefas.
 
+Exemplo de estrutura exportada:
 
+```json
+[
+    {
+        "id": 1,
+        "titulo": "enviar a proposta ao cliente até sexta",
+        "responsavel": "Beatriz",
+        "prazo": "25/09/2026",
+        "prioridade": "ALTA",
+        "categoria": "CLIENTE / VENDAS",
+        "status": "PENDENTE",
+        "criada_em": "21/09/2026 10:30"
+    }
+]
+```
 
+────────
 
+🎨 Interface
 
+A interface foi desenvolvida com uma proposta visual de sistema
+administrativo moderno, utilizando:
 
+• Sidebar lateral
+• Dashboard
+• Cards de estatísticas
+• Tabela de tarefas
+• Janelas de confirmação
+• Botões de ação
+• Campo de pesquisa
+• Paleta em vinho, creme, branco e dourado
+• Tipografia com diferentes níveis de hierarquia visual
 
+A aplicação possui as seguintes áreas principais:
 
+```text
+┌──────────────────────┬────────────────────────────────────┐
+│                      │                                    │
+│  CAIXA DE ENTRADA    │           VISÃO GERAL              │
+│       AÇÃO           │                                    │
+│                      │   Tarefas  Pendentes  Concluídas   │
+│  ⌂ Visão geral       │                                    │
+│  ＋ Nova solicitação │   ┌──────────┐  ┌──────────────┐   │
+│  ☷ Minhas tarefas   │   │ Solicitação │ │ Atividade   │  │
+│  ⇅ Dados             │   │            │ │ recente     │  │
+│                      │   └──────────┘  └──────────────┘  │
+│  Automação inteligente│                                  │
+│                      │                                    │
+└──────────────────────┴────────────────────────────────────┘
+```
 
+────────
 
+🧩 Principais Funções do Código
 
+Função                        Responsabilidade
 
-# projetos_cdt
-About Repositório dedicado ao estudo e prática de Metodologias Ágeis. Este espaço visa compartilhar conhecimento sobre os frameworks mais populares (Scrum, Kanban, etc.), princípios de desenvolvimento ágil e ferramentas que promovem flexibilidade e eficiência. Sinta-se à vontade para explorar, aprender e contribuir!
+────────
+
+conectar()                  Abre conexão com o banco SQLite
+criar_banco()               Cria a tabela de tarefas
+identificar_responsavel()   Localiza o responsável na frase
+identificar_prazo()         Identifica e calcula o prazo
+identificar_prioridade()    Define a prioridade
+identificar_categoria()     Define a categoria
+criar_titulo()              Cria o título da tarefa
+interpretar()               Reúne todas as informações da solicitação
+inserir()                   Salva uma tarefa no banco
+buscar()                    Recupera as tarefas cadastradas
+estatisticas()              Calcula os indicadores do dashboard
+exportar()                  Exporta tarefas para JSON
+importar()                  Importa tarefas de JSON
+gerar_faker()               Cria tarefas fictícias para teste
+concluir()                  Marca uma tarefa como concluída
+excluir()                   Remove uma tarefa
+atualizar_tabela()          Atualiza a tabela exibida na interface
+atualizar_tudo()            Atualiza as informações da aplicação
+
+────────
+
+🏗️ Arquitetura Simplificada
+
+O projeto está dividido conceitualmente em três partes principais:
+
+```text
+┌──────────────────────────────────┐
+│          INTERFACE               │
+│              Tkinter             │
+├──────────────────────────────────┤
+│       LÓGICA DE AUTOMAÇÃO        │
+│ Regex • Datas • Classificação    │
+├──────────────────────────────────┤
+│        PERSISTÊNCIA              │
+│       SQLite • JSON              │
+└──────────────────────────────────┘
+```
+
+O Faker atua como ferramenta auxiliar para geração de dados
+fictícios durante os testes.
+
+────────
+
+📌 Observações
+
+• O banco de dados é criado automaticamente na primeira execução.
+• O sistema funciona localmente, sem necessidade de servidor.
+• A interpretação das solicitações é baseada em regras e expressões
+regulares.
+• O sistema não utiliza uma API de inteligência artificial externa
+para interpretar as frases.
+• O recurso Faker é destinado principalmente à geração de dados de
+teste.
+• O arquivo tarefas.db deve permanecer na pasta do programa para que
+os dados existentes continuem disponíveis.
+
+────────
+
+👩‍💻 Projeto
+
+Automatização de Tarefas
+
+Aplicação desktop desenvolvida em Python + Tkinter, com persistência
+em SQLite, manipulação de dados em JSON e geração de dados de
+teste com Faker.
