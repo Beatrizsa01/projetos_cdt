@@ -7,13 +7,18 @@ from datetime import datetime, date, timedelta
 from faker import Faker
 
 
-BANCO = "tarefas.db"
+# ============================================================
+# CONFIGURAÇÕES
+# ============================================================
 
+BANCO = "tarefas.db"
 fake = Faker("pt_BR")
+
+TEMA_ESCURO = False
 
 
 # ============================================================
-# PALETA
+# CORES - MODO CLARO
 # ============================================================
 
 FUNDO = "#F6F3EF"
@@ -27,14 +32,9 @@ VINHO_CLARO = "#7A4056"
 DOURADO = "#DCB376"
 DOURADO_CLARO = "#E8D7B8"
 
-# Tons usados somente nas fitas decorativas
-DOURADO_FITA = "#C99745"
-DOURADO_FITA_CLARO = "#F0D18E"
-DOURADO_FITA_LUZ = "#F8E2AE"
-DOURADO_FITA_SOMBRA = "#8E642E"
-
 TEXTO = "#29242A"
 TEXTO_SECUNDARIO = "#81767D"
+
 BORDA = "#E7E0DA"
 
 VERDE = "#43866A"
@@ -48,6 +48,140 @@ LARANJA_CLARO = "#FAEEDB"
 
 ROXO = "#76658A"
 ROXO_CLARO = "#EEE9F2"
+
+MENU_TEXTO = "#CFC3C8"
+RODAPE_TEXTO = "#B8AAB0"
+SELECAO = "#EFE7EB"
+AREA_VINHO = "#4A2534"
+
+
+# ============================================================
+# APLICA TEMA ESCURO
+# ============================================================
+
+def aplicar_tema_escuro():
+    global FUNDO
+    global CREME
+    global BRANCO
+    global VINHO
+    global VINHO_ESCURO
+    global VINHO_CLARO
+    global DOURADO
+    global DOURADO_CLARO
+    global TEXTO
+    global TEXTO_SECUNDARIO
+    global BORDA
+    global VERDE
+    global VERDE_CLARO
+    global VERMELHO
+    global VERMELHO_CLARO
+    global LARANJA
+    global LARANJA_CLARO
+    global ROXO
+    global ROXO_CLARO
+    global MENU_TEXTO
+    global RODAPE_TEXTO
+    global SELECAO
+    global AREA_VINHO
+
+    FUNDO = "#171417"
+    CREME = "#211D21"
+    BRANCO = "#29242A"
+
+    VINHO = "#6D3148"
+    VINHO_ESCURO = "#241219"
+    VINHO_CLARO = "#914D68"
+
+    DOURADO = "#DCB376"
+    DOURADO_CLARO = "#4A3B26"
+
+    # TEXTOS BRANCOS
+    TEXTO = "#FFFFFF"
+    TEXTO_SECUNDARIO = "#D4CDD1"
+
+    BORDA = "#40363C"
+
+    VERDE = "#69A989"
+    VERDE_CLARO = "#263A32"
+
+    VERMELHO = "#E07B86"
+    VERMELHO_CLARO = "#42272D"
+
+    LARANJA = "#D39A5D"
+    LARANJA_CLARO = "#433522"
+
+    ROXO = "#A595B7"
+    ROXO_CLARO = "#382F40"
+
+    MENU_TEXTO = "#FFFFFF"
+    RODAPE_TEXTO = "#D4CDD1"
+
+    SELECAO = "#443640"
+    AREA_VINHO = "#43202F"
+
+
+# ============================================================
+# APLICA TEMA CLARO
+# ============================================================
+
+def aplicar_tema_claro():
+    global FUNDO
+    global CREME
+    global BRANCO
+    global VINHO
+    global VINHO_ESCURO
+    global VINHO_CLARO
+    global DOURADO
+    global DOURADO_CLARO
+    global TEXTO
+    global TEXTO_SECUNDARIO
+    global BORDA
+    global VERDE
+    global VERDE_CLARO
+    global VERMELHO
+    global VERMELHO_CLARO
+    global LARANJA
+    global LARANJA_CLARO
+    global ROXO
+    global ROXO_CLARO
+    global MENU_TEXTO
+    global RODAPE_TEXTO
+    global SELECAO
+    global AREA_VINHO
+
+    FUNDO = "#F6F3EF"
+    CREME = "#FBF9F6"
+    BRANCO = "#FFFFFF"
+
+    VINHO = "#542536"
+    VINHO_ESCURO = "#351722"
+    VINHO_CLARO = "#7A4056"
+
+    DOURADO = "#DCB376"
+    DOURADO_CLARO = "#E8D7B8"
+
+    TEXTO = "#29242A"
+    TEXTO_SECUNDARIO = "#81767D"
+
+    BORDA = "#E7E0DA"
+
+    VERDE = "#43866A"
+    VERDE_CLARO = "#E8F3ED"
+
+    VERMELHO = "#A84D59"
+    VERMELHO_CLARO = "#F8E8EB"
+
+    LARANJA = "#B5793D"
+    LARANJA_CLARO = "#FAEEDB"
+
+    ROXO = "#76658A"
+    ROXO_CLARO = "#EEE9F2"
+
+    MENU_TEXTO = "#CFC3C8"
+    RODAPE_TEXTO = "#B8AAB0"
+
+    SELECAO = "#EFE7EB"
+    AREA_VINHO = "#4A2534"
 
 
 # ============================================================
@@ -81,7 +215,7 @@ def criar_banco():
 
 
 # ============================================================
-# IDENTIFICAÇÃO DO RESPONSÁVEL
+# INTELIGÊNCIA DA APLICAÇÃO
 # ============================================================
 
 def identificar_responsavel(texto):
@@ -112,7 +246,6 @@ def identificar_responsavel(texto):
     }
 
     for padrao in padroes:
-
         resultado = re.search(
             padrao,
             texto,
@@ -120,7 +253,6 @@ def identificar_responsavel(texto):
         )
 
         if resultado:
-
             nome = resultado.group(1).strip()
 
             if nome.lower() not in proibidas:
@@ -128,10 +260,6 @@ def identificar_responsavel(texto):
 
     return "Não definido"
 
-
-# ============================================================
-# IDENTIFICAÇÃO DO PRAZO
-# ============================================================
 
 def identificar_prazo(texto):
 
@@ -142,9 +270,7 @@ def identificar_prazo(texto):
         return hoje.strftime("%d/%m/%Y")
 
     if re.search(r"\bamanh[ãa]\b", texto):
-        return (
-            hoje + timedelta(days=1)
-        ).strftime("%d/%m/%Y")
+        return (hoje + timedelta(days=1)).strftime("%d/%m/%Y")
 
     resultado = re.search(
         r"\b(\d{1,2})[/-](\d{1,2})[/-](\d{4})\b",
@@ -152,9 +278,7 @@ def identificar_prazo(texto):
     )
 
     if resultado:
-
         try:
-
             data = date(
                 int(resultado.group(3)),
                 int(resultado.group(2)),
@@ -164,7 +288,6 @@ def identificar_prazo(texto):
             return data.strftime("%d/%m/%Y")
 
         except ValueError:
-
             return "Data inválida"
 
     resultado = re.search(
@@ -173,12 +296,10 @@ def identificar_prazo(texto):
     )
 
     if resultado:
-
         dia = int(resultado.group(1))
         mes = int(resultado.group(2))
 
         try:
-
             data = date(
                 hoje.year,
                 mes,
@@ -186,7 +307,6 @@ def identificar_prazo(texto):
             )
 
             if data < hoje:
-
                 data = date(
                     hoje.year + 1,
                     mes,
@@ -196,7 +316,6 @@ def identificar_prazo(texto):
             return data.strftime("%d/%m/%Y")
 
         except ValueError:
-
             return "Data inválida"
 
     resultado = re.search(
@@ -205,11 +324,9 @@ def identificar_prazo(texto):
     )
 
     if resultado:
-
         dia = int(resultado.group(1))
 
         try:
-
             data = date(
                 hoje.year,
                 hoje.month,
@@ -217,17 +334,13 @@ def identificar_prazo(texto):
             )
 
             if data < hoje:
-
                 if hoje.month == 12:
-
                     data = date(
                         hoje.year + 1,
                         1,
                         dia
                     )
-
                 else:
-
                     data = date(
                         hoje.year,
                         hoje.month + 1,
@@ -237,11 +350,9 @@ def identificar_prazo(texto):
             return data.strftime("%d/%m/%Y")
 
         except ValueError:
-
             return "Data inválida"
 
     dias = {
-
         "segunda": 0,
         "terça": 1,
         "terca": 1,
@@ -251,19 +362,15 @@ def identificar_prazo(texto):
         "sábado": 5,
         "sabado": 5,
         "domingo": 6
-
     }
 
     for nome, numero in dias.items():
 
         if re.search(
-
             r"\b(?:até|ate|na|no|para|nesta|neste|"
             r"próxima|proxima|próximo|proximo)?\s*" +
             re.escape(nome),
-
             texto
-
         ):
 
             diferenca = (
@@ -280,7 +387,6 @@ def identificar_prazo(texto):
             return data.strftime("%d/%m/%Y")
 
     meses = {
-
         "janeiro": 1,
         "fevereiro": 2,
         "março": 3,
@@ -294,23 +400,18 @@ def identificar_prazo(texto):
         "outubro": 10,
         "novembro": 11,
         "dezembro": 12
-
     }
 
     for nome, numero in meses.items():
 
         resultado = re.search(
-
             rf"\b(?:dia\s+)?(\d{{1,2}})\s+de\s+{nome}\b",
-
             texto
-
         )
 
         if resultado:
 
             try:
-
                 dia = int(resultado.group(1))
 
                 data = date(
@@ -320,7 +421,6 @@ def identificar_prazo(texto):
                 )
 
                 if data < hoje:
-
                     data = date(
                         hoje.year + 1,
                         numero,
@@ -330,15 +430,10 @@ def identificar_prazo(texto):
                 return data.strftime("%d/%m/%Y")
 
             except ValueError:
-
                 return "Data inválida"
 
     return "Não definido"
 
-
-# ============================================================
-# PRIORIDADE
-# ============================================================
 
 def identificar_prioridade(texto):
 
@@ -373,73 +468,43 @@ def identificar_prioridade(texto):
     return "BAIXA"
 
 
-# ============================================================
-# CATEGORIA
-# ============================================================
-
 def identificar_categoria(texto):
 
     texto = texto.lower()
 
     if any(p in texto for p in [
-        "relatório",
-        "relatorio",
-        "documento",
-        "planilha",
-        "arquivo",
-        "pdf"
+        "relatório", "relatorio", "documento",
+        "planilha", "arquivo", "pdf"
     ]):
-
         return "DOCUMENTOS"
 
     if any(p in texto for p in [
-        "reunião",
-        "reuniao",
-        "call",
-        "meeting",
-        "encontro"
+        "reunião", "reuniao", "call",
+        "meeting", "encontro"
     ]):
-
         return "REUNIÃO"
 
     if any(p in texto for p in [
-        "cliente",
-        "venda",
-        "vendas",
+        "cliente", "venda", "vendas",
         "proposta"
     ]):
-
         return "CLIENTE / VENDAS"
 
     if any(p in texto for p in [
-        "pagamento",
-        "cobrança",
-        "cobranca",
-        "financeiro",
-        "dinheiro"
+        "pagamento", "cobrança", "cobranca",
+        "financeiro", "dinheiro"
     ]):
-
         return "FINANCEIRO"
 
     if any(p in texto for p in [
-        "programar",
-        "programação",
-        "programacao",
-        "código",
-        "codigo",
-        "sistema",
-        "software",
-        "computador"
+        "programar", "programação",
+        "programacao", "código", "codigo",
+        "sistema", "software", "computador"
     ]):
-
         return "TECNOLOGIA"
 
     return "GERAL"
 
-
-# ============================================================
-# TÍTULO
-# ============================================================
 
 def criar_titulo(texto):
 
@@ -454,7 +519,6 @@ def criar_titulo(texto):
     ]:
 
         if titulo.lower().startswith(inicio):
-
             titulo = titulo[
                 len(inicio):
             ].strip()
@@ -467,39 +531,21 @@ def criar_titulo(texto):
     return titulo
 
 
-# ============================================================
-# INTERPRETAR
-# ============================================================
-
 def interpretar(texto):
 
     return {
-
         "texto_original": texto,
-
         "titulo": criar_titulo(texto),
-
         "responsavel": identificar_responsavel(texto),
-
         "prazo": identificar_prazo(texto),
-
         "prioridade": identificar_prioridade(texto),
-
         "categoria": identificar_categoria(texto),
-
         "status": "PENDENTE",
-
-        "criada_em":
-            datetime.now().strftime(
-                "%d/%m/%Y %H:%M"
-            )
-
+        "criada_em": datetime.now().strftime(
+            "%d/%m/%Y %H:%M"
+        )
     }
 
-
-# ============================================================
-# INSERIR
-# ============================================================
 
 def inserir(tarefa):
 
@@ -507,7 +553,6 @@ def inserir(tarefa):
     cur = con.cursor()
 
     cur.execute("""
-
         INSERT INTO tarefas
         (
             texto_original,
@@ -519,11 +564,8 @@ def inserir(tarefa):
             status,
             criada_em
         )
-
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-
     """, (
-
         tarefa["texto_original"],
         tarefa["titulo"],
         tarefa["responsavel"],
@@ -532,16 +574,11 @@ def inserir(tarefa):
         tarefa["categoria"],
         tarefa["status"],
         tarefa["criada_em"]
-
     ))
 
     con.commit()
     con.close()
 
-
-# ============================================================
-# BUSCAR
-# ============================================================
 
 def buscar():
 
@@ -549,7 +586,6 @@ def buscar():
     cur = con.cursor()
 
     cur.execute("""
-
         SELECT
             id,
             titulo,
@@ -559,11 +595,8 @@ def buscar():
             categoria,
             status,
             criada_em
-
         FROM tarefas
-
         ORDER BY id DESC
-
     """)
 
     dados = cur.fetchall()
@@ -572,10 +605,6 @@ def buscar():
 
     return dados
 
-
-# ============================================================
-# ESTATÍSTICAS
-# ============================================================
 
 def estatisticas():
 
@@ -589,31 +618,25 @@ def estatisticas():
     total = cur.fetchone()[0]
 
     cur.execute("""
-
         SELECT COUNT(*)
         FROM tarefas
         WHERE status = 'PENDENTE'
-
     """)
 
     pendentes = cur.fetchone()[0]
 
     cur.execute("""
-
         SELECT COUNT(*)
         FROM tarefas
         WHERE status = 'CONCLUÍDA'
-
     """)
 
     concluidas = cur.fetchone()[0]
 
     cur.execute("""
-
         SELECT COUNT(*)
         FROM tarefas
         WHERE prioridade = 'ALTA'
-
     """)
 
     urgentes = cur.fetchone()[0]
@@ -663,253 +686,7 @@ class Aplicativo(tk.Tk):
 
 
     # ========================================================
-    # FITAS DOURADAS CURVAS
-    # ========================================================
-
-    def criar_fitas_curvas(
-        self,
-        pai,
-        bg=VINHO_ESCURO,
-        largura=255,
-        altura=125
-    ):
-
-        canvas = tk.Canvas(
-            pai,
-            width=largura,
-            height=altura,
-            bg=bg,
-            highlightthickness=0,
-            bd=0
-        )
-
-        canvas.pack(
-            fill="both",
-            expand=True
-        )
-
-        # ----------------------------------------------------
-        # SOMBRA DA FITA
-        # ----------------------------------------------------
-
-        canvas.create_line(
-            -35, 88,
-            15, 78,
-            55, 81,
-            92, 96,
-            126, 113,
-            157, 119,
-            188, 112,
-            218, 94,
-            252, 71,
-            285, 59,
-            315, 62,
-            350, 78,
-            385, 102,
-            425, 120,
-            465, 123,
-            510, 111,
-            550, 89,
-            590, 70,
-            fill=DOURADO_FITA_SOMBRA,
-            width=6,
-            smooth=True
-        )
-
-        # ----------------------------------------------------
-        # FITA PRINCIPAL
-        # ----------------------------------------------------
-
-        canvas.create_line(
-            -35, 82,
-            15, 72,
-            55, 75,
-            92, 90,
-            126, 107,
-            157, 113,
-            188, 106,
-            218, 88,
-            252, 65,
-            285, 53,
-            315, 56,
-            350, 72,
-            385, 96,
-            425, 114,
-            465, 117,
-            510, 105,
-            550, 83,
-            590, 64,
-            fill=DOURADO_FITA,
-            width=5,
-            smooth=True
-        )
-
-        # ----------------------------------------------------
-        # BRILHO DA FITA
-        # ----------------------------------------------------
-
-        canvas.create_line(
-            -30, 79,
-            15, 69,
-            55, 72,
-            91, 87,
-            126, 104,
-            157, 110,
-            188, 103,
-            218, 85,
-            252, 62,
-            285, 50,
-            315, 53,
-            350, 69,
-            385, 93,
-            425, 111,
-            465, 114,
-            510, 102,
-            550, 80,
-            590, 61,
-            fill=DOURADO_FITA_CLARO,
-            width=2,
-            smooth=True
-        )
-
-        # ----------------------------------------------------
-        # SEGUNDA FITA, MAIS FINA
-        # ----------------------------------------------------
-
-        canvas.create_line(
-            -30, 103,
-            20, 93,
-            58, 96,
-            95, 109,
-            128, 121,
-            158, 124,
-            190, 118,
-            220, 102,
-            253, 81,
-            285, 70,
-            316, 73,
-            350, 88,
-            385, 108,
-            424, 123,
-            466, 126,
-            510, 116,
-            552, 96,
-            592, 79,
-            fill=DOURADO_FITA_CLARO,
-            width=2,
-            smooth=True
-        )
-
-        # ----------------------------------------------------
-        # PEQUENOS REFLEXOS
-        # ----------------------------------------------------
-
-        canvas.create_line(
-            224, 85,
-            253, 65,
-            285, 54,
-            fill=DOURADO_FITA_LUZ,
-            width=1,
-            smooth=True
-        )
-
-        return canvas
-
-
-    def fita_dourada(
-        self,
-        pai,
-        lado="top",
-        margem=0,
-        espessura=1,
-        cor=DOURADO
-    ):
-
-        fita = tk.Frame(
-            pai,
-            bg=cor,
-            height=espessura
-        )
-
-        if lado == "top":
-
-            fita.pack(
-                side="top",
-                fill="x",
-                padx=margem
-            )
-
-        elif lado == "bottom":
-
-            fita.pack(
-                side="bottom",
-                fill="x",
-                padx=margem
-            )
-
-        return fita
-
-
-    def ornamento_dourado(
-        self,
-        pai,
-        bg,
-        largura=70
-    ):
-
-        area = tk.Frame(
-            pai,
-            bg=bg,
-            height=8
-        )
-
-        area.pack_propagate(False)
-
-        canvas = tk.Canvas(
-            area,
-            width=largura,
-            height=8,
-            bg=bg,
-            highlightthickness=0,
-            bd=0
-        )
-
-        canvas.pack()
-
-        centro = largura // 2
-
-        canvas.create_line(
-            0,
-            4,
-            centro - 7,
-            4,
-            fill=DOURADO,
-            width=1
-        )
-
-        canvas.create_oval(
-            centro - 3,
-            1,
-            centro + 3,
-            7,
-            outline=DOURADO,
-            width=1
-        )
-
-        canvas.create_line(
-            centro + 7,
-            4,
-            largura,
-            4,
-            fill=DOURADO,
-            width=1
-        )
-
-        return area
-
-
-    # ========================================================
-    # ESTILO
+    # ESTILO DA TABELA
     # ========================================================
 
     def configurar_estilo(self):
@@ -931,28 +708,73 @@ class Aplicativo(tk.Tk):
         style.configure(
             "Treeview.Heading",
             background=CREME,
-            foreground=TEXTO_SECUNDARIO,
-            font=(
-                "Segoe UI",
-                9,
-                "bold"
-            ),
+            foreground=TEXTO,
+            font=("Segoe UI", 9, "bold"),
             relief="flat"
         )
 
         style.map(
             "Treeview",
             background=[
-                ("selected", "#EFE7EB")
+                ("selected", SELECAO)
             ],
             foreground=[
                 ("selected", TEXTO)
             ]
         )
 
+        style.configure(
+            "Vertical.TScrollbar",
+            background=CREME,
+            troughcolor=FUNDO,
+            bordercolor=FUNDO,
+            arrowcolor=TEXTO
+        )
+
 
     # ========================================================
-    # INTERFACE
+    # TROCAR TEMA
+    # ========================================================
+
+    def alternar_tema(self):
+
+        global TEMA_ESCURO
+
+        pagina = self.pagina_atual
+
+        TEMA_ESCURO = not TEMA_ESCURO
+
+        if TEMA_ESCURO:
+            aplicar_tema_escuro()
+        else:
+            aplicar_tema_claro()
+
+        for widget in self.winfo_children():
+            widget.destroy()
+
+        self.configure(
+            bg=FUNDO
+        )
+
+        self.configurar_estilo()
+
+        self.criar_interface()
+
+        if pagina == "tarefas":
+            self.mostrar_tarefas()
+
+        elif pagina == "nova":
+            self.mostrar_nova()
+
+        elif pagina == "dados":
+            self.mostrar_dados()
+
+        else:
+            self.mostrar_dashboard()
+
+
+    # ========================================================
+    # INTERFACE PRINCIPAL
     # ========================================================
 
     def criar_interface(self):
@@ -968,20 +790,9 @@ class Aplicativo(tk.Tk):
             fill="y"
         )
 
-        self.sidebar.pack_propagate(False)
-
-
-        # ----------------------------------------------------
-        # FILETE DOURADO SUPERIOR
-        # ----------------------------------------------------
-
-        self.fita_dourada(
-            self.sidebar,
-            "top",
-            0,
-            2
+        self.sidebar.pack_propagate(
+            False
         )
-
 
         logo_area = tk.Frame(
             self.sidebar,
@@ -993,7 +804,6 @@ class Aplicativo(tk.Tk):
             padx=28,
             pady=(35, 40)
         )
-
 
         tk.Label(
             logo_area,
@@ -1009,7 +819,6 @@ class Aplicativo(tk.Tk):
             anchor="w"
         )
 
-
         tk.Label(
             logo_area,
             text="CAIXA DE ENTRADA",
@@ -1018,13 +827,12 @@ class Aplicativo(tk.Tk):
                 10,
                 "bold"
             ),
-            fg=BRANCO,
+            fg="#FFFFFF",
             bg=VINHO_ESCURO
         ).pack(
             anchor="w",
             pady=(5, 0)
         )
-
 
         tk.Label(
             logo_area,
@@ -1038,17 +846,6 @@ class Aplicativo(tk.Tk):
         ).pack(
             anchor="w"
         )
-
-
-        self.ornamento_dourado(
-            logo_area,
-            VINHO_ESCURO,
-            105
-        ).pack(
-            anchor="w",
-            pady=(12, 0)
-        )
-
 
         self.criar_menu(
             "⌂   VISÃO GERAL",
@@ -1066,39 +863,9 @@ class Aplicativo(tk.Tk):
         )
 
         self.criar_menu(
-            "⇅   DADOS ",
+            "⇅   DADOS",
             self.mostrar_dados
         )
-
-
-        # ----------------------------------------------------
-        # ÁREA DAS FITAS CURVAS
-        # ----------------------------------------------------
-
-        decoracao = tk.Frame(
-            self.sidebar,
-            bg=VINHO_ESCURO,
-            height=125
-        )
-
-        decoracao.pack(
-            side="bottom",
-            fill="x"
-        )
-
-        decoracao.pack_propagate(False)
-
-        self.criar_fitas_curvas(
-            decoracao,
-            VINHO_ESCURO,
-            255,
-            125
-        )
-
-
-        # ----------------------------------------------------
-        # RODAPÉ
-        # ----------------------------------------------------
 
         rodape = tk.Frame(
             self.sidebar,
@@ -1109,28 +876,17 @@ class Aplicativo(tk.Tk):
             side="bottom",
             fill="x",
             padx=25,
-            pady=20
+            pady=25
         )
 
-
-        self.fita_dourada(
+        tk.Frame(
             rodape,
-            "top",
-            0,
-            1
-        )
-
-
-        self.fita_dourada(
-            rodape,
-            "top",
-            0,
-            1
+            bg=DOURADO,
+            height=1
         ).pack(
             fill="x",
-            pady=(3, 14)
+            pady=(0, 15)
         )
-
 
         tk.Label(
             rodape,
@@ -1146,22 +902,51 @@ class Aplicativo(tk.Tk):
             anchor="w"
         )
 
-
         tk.Label(
             rodape,
-        
+            text="Tkinter  •  SQLite\nJSON  •  Faker",
             font=(
                 "Segoe UI",
                 8
             ),
-            fg="#B8AAB0",
+            fg=RODAPE_TEXTO,
             bg=VINHO_ESCURO,
             justify="left"
         ).pack(
             anchor="w",
-            pady=(5, 0)
+            pady=(5, 5)
         )
 
+        # BOTÃO DE TEMA
+        self.botao_tema = tk.Button(
+            rodape,
+            text=(
+                "☀  MODO CLARO"
+                if TEMA_ESCURO
+                else
+                "☾  MODO ESCURO"
+            ),
+            command=self.alternar_tema,
+            bg=VINHO,
+            fg="#FFFFFF",
+            activebackground=VINHO_CLARO,
+            activeforeground="#FFFFFF",
+            relief="flat",
+            bd=0,
+            font=(
+                "Segoe UI",
+                8,
+                "bold"
+            ),
+            cursor="hand2",
+            padx=10,
+            pady=9
+        )
+
+        self.botao_tema.pack(
+            fill="x",
+            pady=(5, 0)
+        )
 
         self.conteudo = tk.Frame(
             self,
@@ -1174,9 +959,7 @@ class Aplicativo(tk.Tk):
             expand=True
         )
 
-
         self.criar_cabecalho()
-
 
         self.container = tk.Frame(
             self.conteudo,
@@ -1187,7 +970,6 @@ class Aplicativo(tk.Tk):
             fill="both",
             expand=True
         )
-
 
         self.mostrar_dashboard()
 
@@ -1211,10 +993,10 @@ class Aplicativo(tk.Tk):
                 9,
                 "bold"
             ),
-            fg="#CFC3C8",
+            fg=MENU_TEXTO,
             bg=VINHO_ESCURO,
             activebackground=VINHO,
-            activeforeground=BRANCO,
+            activeforeground="#FFFFFF",
             relief="flat",
             bd=0,
             anchor="w",
@@ -1249,7 +1031,6 @@ class Aplicativo(tk.Tk):
             pady=(35, 15)
         )
 
-
         esquerda = tk.Frame(
             topo,
             bg=FUNDO
@@ -1258,7 +1039,6 @@ class Aplicativo(tk.Tk):
         esquerda.pack(
             side="left"
         )
-
 
         self.titulo = tk.Label(
             esquerda,
@@ -1275,7 +1055,6 @@ class Aplicativo(tk.Tk):
         self.titulo.pack(
             anchor="w"
         )
-
 
         self.subtitulo = tk.Label(
             esquerda,
@@ -1296,18 +1075,6 @@ class Aplicativo(tk.Tk):
             pady=(5, 0)
         )
 
-
-        self.fita_dourada(
-            esquerda,
-            "top",
-            0,
-            1
-        ).pack(
-            fill="x",
-            pady=(12, 0)
-        )
-
-
         direita = tk.Frame(
             topo,
             bg=FUNDO
@@ -1317,14 +1084,12 @@ class Aplicativo(tk.Tk):
             side="right"
         )
 
-
         hoje = datetime.now().strftime(
             "%d de %B de %Y"
         ).replace(
             "September",
             "setembro"
         )
-
 
         tk.Label(
             direita,
@@ -1339,7 +1104,6 @@ class Aplicativo(tk.Tk):
         ).pack(
             anchor="e"
         )
-
 
         tk.Label(
             direita,
@@ -1356,7 +1120,7 @@ class Aplicativo(tk.Tk):
 
 
     # ========================================================
-    # LIMPAR
+    # LIMPAR CONTAINER
     # ========================================================
 
     def limpar_container(self):
@@ -1386,9 +1150,7 @@ class Aplicativo(tk.Tk):
             )
         )
 
-
         total, pendentes, concluidas, urgentes = estatisticas()
-
 
         cards = tk.Frame(
             self.container,
@@ -1400,7 +1162,6 @@ class Aplicativo(tk.Tk):
             padx=42
         )
 
-
         self.criar_stat_card(
             cards,
             "TAREFAS",
@@ -1408,7 +1169,6 @@ class Aplicativo(tk.Tk):
             "Total cadastradas",
             DOURADO
         )
-
 
         self.criar_stat_card(
             cards,
@@ -1418,7 +1178,6 @@ class Aplicativo(tk.Tk):
             VINHO_CLARO
         )
 
-
         self.criar_stat_card(
             cards,
             "CONCLUÍDAS",
@@ -1427,7 +1186,6 @@ class Aplicativo(tk.Tk):
             VERDE
         )
 
-
         self.criar_stat_card(
             cards,
             "URGENTES",
@@ -1435,7 +1193,6 @@ class Aplicativo(tk.Tk):
             "Alta prioridade",
             VERMELHO
         )
-
 
         inferior = tk.Frame(
             self.container,
@@ -1449,11 +1206,7 @@ class Aplicativo(tk.Tk):
             pady=25
         )
 
-
-        # ====================================================
-        # CARD VINHO
-        # ====================================================
-
+        # CARTÃO VINHO
         card_entrada = tk.Frame(
             inferior,
             bg=VINHO_ESCURO
@@ -1465,23 +1218,6 @@ class Aplicativo(tk.Tk):
             expand=True,
             padx=(0, 12)
         )
-
-
-        self.fita_dourada(
-            card_entrada,
-            "top",
-            0,
-            3
-        )
-
-
-        self.fita_dourada(
-            card_entrada,
-            "top",
-            18,
-            1
-        )
-
 
         tk.Label(
             card_entrada,
@@ -1499,7 +1235,6 @@ class Aplicativo(tk.Tk):
             pady=(28, 5)
         )
 
-
         tk.Label(
             card_entrada,
             text=(
@@ -1511,14 +1246,13 @@ class Aplicativo(tk.Tk):
                 21,
                 "bold"
             ),
-            fg=BRANCO,
+            fg="#FFFFFF",
             bg=VINHO_ESCURO,
             justify="left"
         ).pack(
             anchor="w",
             padx=28
         )
-
 
         tk.Label(
             card_entrada,
@@ -1530,7 +1264,7 @@ class Aplicativo(tk.Tk):
                 "Segoe UI",
                 9
             ),
-            fg="#C9BBC1",
+            fg="#FFFFFF" if TEMA_ESCURO else "#C9BBC1",
             bg=VINHO_ESCURO,
             wraplength=420,
             justify="left"
@@ -1540,7 +1274,6 @@ class Aplicativo(tk.Tk):
             pady=(12, 18)
         )
 
-
         self.dashboard_texto = tk.Text(
             card_entrada,
             height=5,
@@ -1548,9 +1281,9 @@ class Aplicativo(tk.Tk):
                 "Segoe UI",
                 10
             ),
-            bg="#4A2534",
-            fg=BRANCO,
-            insertbackground=BRANCO,
+            bg=AREA_VINHO,
+            fg="#FFFFFF",
+            insertbackground="#FFFFFF",
             relief="flat",
             bd=0,
             wrap="word",
@@ -1563,24 +1296,11 @@ class Aplicativo(tk.Tk):
             padx=28
         )
 
-
-        campo_linha = tk.Frame(
-            card_entrada,
-            bg=DOURADO,
-            height=1
-        )
-
-        campo_linha.pack(
-            fill="x",
-            padx=28
-        )
-
-
         self.dashboard_texto.insert(
             "1.0",
-            " A Beatriz precisa enviar a proposta ao cliente até sexta. É urgente."
+            "A Beatriz precisa enviar a proposta "
+            "ao cliente até sexta. É urgente."
         )
-
 
         tk.Button(
             card_entrada,
@@ -1605,11 +1325,7 @@ class Aplicativo(tk.Tk):
             pady=20
         )
 
-
-        # ====================================================
-        # CARD ATIVIDADE
-        # ====================================================
-
+        # ATIVIDADE RECENTE
         card_lista = tk.Frame(
             inferior,
             bg=BRANCO,
@@ -1623,15 +1339,6 @@ class Aplicativo(tk.Tk):
             expand=True,
             padx=(12, 0)
         )
-
-
-        self.fita_dourada(
-            card_lista,
-            "top",
-            0,
-            2
-        )
-
 
         tk.Label(
             card_lista,
@@ -1649,7 +1356,6 @@ class Aplicativo(tk.Tk):
             pady=(25, 3)
         )
 
-
         tk.Label(
             card_lista,
             text="Últimas tarefas",
@@ -1665,20 +1371,7 @@ class Aplicativo(tk.Tk):
             padx=25
         )
 
-
-        self.ornamento_dourado(
-            card_lista,
-            BRANCO,
-            80
-        ).pack(
-            anchor="w",
-            padx=25,
-            pady=(8, 5)
-        )
-
-
         tarefas = buscar()[:5]
-
 
         if not tarefas:
 
@@ -1710,7 +1403,6 @@ class Aplicativo(tk.Tk):
                     pady=9
                 )
 
-
                 tk.Frame(
                     linha,
                     bg=(
@@ -1727,7 +1419,6 @@ class Aplicativo(tk.Tk):
                     padx=(0, 12)
                 )
 
-
                 info = tk.Frame(
                     linha,
                     bg=BRANCO
@@ -1738,7 +1429,6 @@ class Aplicativo(tk.Tk):
                     fill="x",
                     expand=True
                 )
-
 
                 tk.Label(
                     info,
@@ -1755,7 +1445,6 @@ class Aplicativo(tk.Tk):
                     fill="x"
                 )
 
-
                 tk.Label(
                     info,
                     text=f"{tarefa[2]}  •  {tarefa[3]}",
@@ -1770,7 +1459,6 @@ class Aplicativo(tk.Tk):
                     fill="x",
                     pady=(3, 0)
                 )
-
 
         tk.Button(
             card_lista,
@@ -1821,7 +1509,6 @@ class Aplicativo(tk.Tk):
             padx=5
         )
 
-
         tk.Frame(
             card,
             bg=detalhe,
@@ -1830,15 +1517,6 @@ class Aplicativo(tk.Tk):
             side="left",
             fill="y"
         )
-
-
-        self.fita_dourada(
-            card,
-            "top",
-            0,
-            2
-        )
-
 
         corpo = tk.Frame(
             card,
@@ -1851,7 +1529,6 @@ class Aplicativo(tk.Tk):
             padx=18,
             pady=17
         )
-
 
         tk.Label(
             corpo,
@@ -1866,7 +1543,6 @@ class Aplicativo(tk.Tk):
         ).pack(
             anchor="w"
         )
-
 
         tk.Label(
             corpo,
@@ -1883,7 +1559,6 @@ class Aplicativo(tk.Tk):
             pady=(3, 0)
         )
 
-
         tk.Label(
             corpo,
             text=descricao,
@@ -1899,7 +1574,7 @@ class Aplicativo(tk.Tk):
 
 
     # ========================================================
-    # NOVA SOLICITAÇÃO
+    # NOVA TAREFA
     # ========================================================
 
     def mostrar_nova(self):
@@ -1916,7 +1591,6 @@ class Aplicativo(tk.Tk):
             text="Descreva o que precisa ser feito."
         )
 
-
         card = tk.Frame(
             self.container,
             bg=BRANCO,
@@ -1930,23 +1604,6 @@ class Aplicativo(tk.Tk):
             padx=42,
             pady=10
         )
-
-
-        self.fita_dourada(
-            card,
-            "top",
-            0,
-            2
-        )
-
-
-        self.fita_dourada(
-            card,
-            "top",
-            30,
-            1
-        )
-
 
         tk.Label(
             card,
@@ -1964,7 +1621,6 @@ class Aplicativo(tk.Tk):
             pady=(35, 5)
         )
 
-
         tk.Label(
             card,
             text="O que precisa acontecer?",
@@ -1979,7 +1635,6 @@ class Aplicativo(tk.Tk):
             anchor="w",
             padx=35
         )
-
 
         tk.Label(
             card,
@@ -1998,7 +1653,6 @@ class Aplicativo(tk.Tk):
             padx=35,
             pady=(5, 20)
         )
-
 
         self.campo_nova = tk.Text(
             card,
@@ -2022,20 +1676,11 @@ class Aplicativo(tk.Tk):
             padx=35
         )
 
-
-        self.fita_dourada(
-            card,
-            "top",
-            35,
-            1
-        )
-
-
         self.campo_nova.insert(
             "1.0",
-            "O Ivan precisa preparar o relatório para o cliente até sexta. É urgente."
+            "O Ivan precisa preparar o relatório "
+            "para o cliente até sexta. É urgente."
         )
-
 
         exemplo = tk.Frame(
             card,
@@ -2047,7 +1692,6 @@ class Aplicativo(tk.Tk):
             padx=35,
             pady=20
         )
-
 
         tk.Label(
             exemplo,
@@ -2065,7 +1709,6 @@ class Aplicativo(tk.Tk):
             pady=13
         )
 
-
         tk.Label(
             exemplo,
             text=(
@@ -2082,13 +1725,12 @@ class Aplicativo(tk.Tk):
             side="left"
         )
 
-
         tk.Button(
             card,
             text="CRIAR TAREFA  →",
             command=self.criar_tarefa_nova,
             bg=VINHO,
-            fg=BRANCO,
+            fg="#FFFFFF",
             activebackground=VINHO_CLARO,
             relief="flat",
             bd=0,
@@ -2105,10 +1747,6 @@ class Aplicativo(tk.Tk):
             padx=35
         )
 
-
-    # ========================================================
-    # CRIAR TAREFA NOVA
-    # ========================================================
 
     def criar_tarefa_nova(self):
 
@@ -2132,10 +1770,6 @@ class Aplicativo(tk.Tk):
 
         self.mostrar_confirmacao(tarefa)
 
-
-    # ========================================================
-    # CRIAR PELO DASHBOARD
-    # ========================================================
 
     def criar_pelo_dashboard(self):
 
@@ -2168,9 +1802,13 @@ class Aplicativo(tk.Tk):
 
         janela = tk.Toplevel(self)
 
-        janela.title("Tarefa criada")
+        janela.title(
+            "Tarefa criada"
+        )
 
-        janela.geometry("520x520")
+        janela.geometry(
+            "450x420"
+        )
 
         janela.configure(
             bg=BRANCO
@@ -2180,15 +1818,6 @@ class Aplicativo(tk.Tk):
             False,
             False
         )
-
-
-        self.fita_dourada(
-            janela,
-            "top",
-            0,
-            3
-        )
-
 
         tk.Label(
             janela,
@@ -2204,7 +1833,6 @@ class Aplicativo(tk.Tk):
             pady=(25, 0)
         )
 
-
         tk.Label(
             janela,
             text="Tudo organizado.",
@@ -2216,7 +1844,6 @@ class Aplicativo(tk.Tk):
             fg=TEXTO,
             bg=BRANCO
         ).pack()
-
 
         tk.Label(
             janela,
@@ -2233,16 +1860,6 @@ class Aplicativo(tk.Tk):
         ).pack(
             pady=(5, 20)
         )
-
-
-        self.ornamento_dourado(
-            janela,
-            BRANCO,
-            100
-        ).pack(
-            pady=(0, 8)
-        )
-
 
         dados = [
             (
@@ -2263,7 +1880,6 @@ class Aplicativo(tk.Tk):
             )
         ]
 
-
         for nome, valor in dados:
 
             linha = tk.Frame(
@@ -2276,7 +1892,6 @@ class Aplicativo(tk.Tk):
                 padx=45,
                 pady=4
             )
-
 
             tk.Label(
                 linha,
@@ -2293,7 +1908,6 @@ class Aplicativo(tk.Tk):
                 padx=15,
                 pady=12
             )
-
 
             tk.Label(
                 linha,
@@ -2314,7 +1928,6 @@ class Aplicativo(tk.Tk):
                 padx=15
             )
 
-
         tk.Button(
             janela,
             text="FECHAR",
@@ -2323,7 +1936,7 @@ class Aplicativo(tk.Tk):
                 self.atualizar_tudo()
             ),
             bg=VINHO,
-            fg=BRANCO,
+            fg="#FFFFFF",
             activebackground=VINHO_CLARO,
             relief="flat",
             bd=0,
@@ -2355,9 +1968,10 @@ class Aplicativo(tk.Tk):
         )
 
         self.subtitulo.config(
-            text="Gerencie tudo o que precisa ser feito."
+            text=(
+                "Gerencie tudo o que precisa ser feito."
+            )
         )
-
 
         topo = tk.Frame(
             self.container,
@@ -2370,7 +1984,6 @@ class Aplicativo(tk.Tk):
             pady=(0, 15)
         )
 
-
         self.busca = tk.Entry(
             topo,
             font=(
@@ -2379,6 +1992,7 @@ class Aplicativo(tk.Tk):
             ),
             bg=BRANCO,
             fg=TEXTO,
+            insertbackground=TEXTO,
             relief="flat",
             bd=0
         )
@@ -2391,20 +2005,17 @@ class Aplicativo(tk.Tk):
             padx=(0, 10)
         )
 
-
         self.busca.bind(
             "<KeyRelease>",
-            lambda e:
-                self.atualizar_tabela()
+            lambda e: self.atualizar_tabela()
         )
-
 
         tk.Button(
             topo,
             text="+  NOVA TAREFA",
             command=self.mostrar_nova,
             bg=VINHO,
-            fg=BRANCO,
+            fg="#FFFFFF",
             activebackground=VINHO_CLARO,
             relief="flat",
             bd=0,
@@ -2420,7 +2031,6 @@ class Aplicativo(tk.Tk):
             side="right"
         )
 
-
         card = tk.Frame(
             self.container,
             bg=BRANCO,
@@ -2434,15 +2044,6 @@ class Aplicativo(tk.Tk):
             padx=42
         )
 
-
-        self.fita_dourada(
-            card,
-            "top",
-            0,
-            2
-        )
-
-
         colunas = (
             "ID",
             "TÍTULO",
@@ -2454,14 +2055,12 @@ class Aplicativo(tk.Tk):
             "CRIADA EM"
         )
 
-
         self.tabela = ttk.Treeview(
             card,
             columns=colunas,
             show="headings",
             selectmode="browse"
         )
-
 
         larguras = [
             45,
@@ -2473,7 +2072,6 @@ class Aplicativo(tk.Tk):
             105,
             130
         ]
-
 
         for coluna, largura in zip(
             colunas,
@@ -2491,24 +2089,20 @@ class Aplicativo(tk.Tk):
                 anchor="center"
             )
 
-
         scroll = ttk.Scrollbar(
             card,
             orient="vertical",
             command=self.tabela.yview
         )
 
-
         self.tabela.configure(
             yscrollcommand=scroll.set
         )
-
 
         scroll.pack(
             side="right",
             fill="y"
         )
-
 
         self.tabela.pack(
             side="left",
@@ -2517,7 +2111,6 @@ class Aplicativo(tk.Tk):
             padx=8,
             pady=8
         )
-
 
         acoes = tk.Frame(
             self.container,
@@ -2530,7 +2123,6 @@ class Aplicativo(tk.Tk):
             pady=15
         )
 
-
         self.botao_acao(
             acoes,
             "✓  CONCLUIR",
@@ -2541,7 +2133,6 @@ class Aplicativo(tk.Tk):
             side="left",
             padx=(0, 7)
         )
-
 
         self.botao_acao(
             acoes,
@@ -2554,10 +2145,9 @@ class Aplicativo(tk.Tk):
             padx=7
         )
 
-
         self.botao_acao(
             acoes,
-            "↓  EXPORTAR JSON",
+            "↓  Salvar",
             self.exportar,
             ROXO_CLARO,
             ROXO
@@ -2565,13 +2155,8 @@ class Aplicativo(tk.Tk):
             side="right"
         )
 
-
         self.atualizar_tabela()
 
-
-    # ========================================================
-    # BOTÕES DE AÇÃO
-    # ========================================================
 
     def botao_acao(
         self,
@@ -2602,35 +2187,24 @@ class Aplicativo(tk.Tk):
         )
 
 
-    # ========================================================
-    # ATUALIZAR TABELA
-    # ========================================================
-
     def atualizar_tabela(self):
 
         if not hasattr(
             self,
             "tabela"
         ):
-
             return
 
-
         for item in self.tabela.get_children():
-
             self.tabela.delete(item)
 
-
         termo = ""
-
 
         if hasattr(
             self,
             "busca"
         ):
-
             termo = self.busca.get().lower()
-
 
         for tarefa in buscar():
 
@@ -2639,10 +2213,8 @@ class Aplicativo(tk.Tk):
                 for x in tarefa
             ).lower()
 
-
             if termo and termo not in texto:
                 continue
-
 
             tag = (
                 "alta"
@@ -2654,14 +2226,12 @@ class Aplicativo(tk.Tk):
                 else "baixa"
             )
 
-
             self.tabela.insert(
                 "",
                 "end",
                 values=tarefa,
                 tags=(tag,)
             )
-
 
         self.tabela.tag_configure(
             "alta",
@@ -2701,36 +2271,23 @@ class Aplicativo(tk.Tk):
 
             return
 
-
         item = self.tabela.item(
             selecionado[0]
         )
 
-
         id_tarefa = item["values"][0]
-
 
         con = conectar()
         cur = con.cursor()
 
-
         cur.execute("""
-
             UPDATE tarefas
-
             SET status = 'CONCLUÍDA'
-
             WHERE id = ?
-
-        """, (
-            id_tarefa,
-        ))
-
+        """, (id_tarefa,))
 
         con.commit()
-
         con.close()
-
 
         self.atualizar_tabela()
 
@@ -2752,39 +2309,28 @@ class Aplicativo(tk.Tk):
 
             return
 
-
         item = self.tabela.item(
             selecionado[0]
         )
 
-
         id_tarefa = item["values"][0]
-
 
         if not messagebox.askyesno(
             "Excluir tarefa",
             "Deseja realmente excluir esta tarefa?"
         ):
-
             return
-
 
         con = conectar()
         cur = con.cursor()
 
-
         cur.execute(
             "DELETE FROM tarefas WHERE id = ?",
-            (
-                id_tarefa,
-            )
+            (id_tarefa,)
         )
 
-
         con.commit()
-
         con.close()
-
 
         self.atualizar_tabela()
 
@@ -2804,9 +2350,10 @@ class Aplicativo(tk.Tk):
         )
 
         self.subtitulo.config(
-            text="Importe, exporte e gere dados de teste."
+            text=(
+                "Importe, exporte e gere dados de teste."
+            )
         )
-
 
         area = tk.Frame(
             self.container,
@@ -2819,26 +2366,23 @@ class Aplicativo(tk.Tk):
             padx=42
         )
 
-
         self.criar_card_dado(
             area,
             "EXPORTAR",
             "Salvar tarefas",
-            "Exporte suas tarefas para um arquivo JSON.",
-            "↓  EXPORTAR JSON",
+            "Exporte suas tarefas.",
+            "↓  EXPORTAR",
             self.exportar
         )
-
 
         self.criar_card_dado(
             area,
             "IMPORTAR",
             "Restaurar tarefas",
             "Carregue tarefas salvas anteriormente.",
-            "↑  IMPORTAR JSON",
+            "↑  IMPORTAR",
             self.importar
         )
-
 
         self.criar_card_dado(
             area,
@@ -2849,10 +2393,6 @@ class Aplicativo(tk.Tk):
             self.gerar_faker
         )
 
-
-    # ========================================================
-    # CARDS DE DADOS
-    # ========================================================
 
     def criar_card_dado(
         self,
@@ -2876,15 +2416,6 @@ class Aplicativo(tk.Tk):
             pady=7
         )
 
-
-        self.fita_dourada(
-            card,
-            "top",
-            0,
-            2
-        )
-
-
         conteudo = tk.Frame(
             card,
             bg=BRANCO
@@ -2895,7 +2426,6 @@ class Aplicativo(tk.Tk):
             padx=25,
             pady=22
         )
-
 
         tk.Label(
             conteudo,
@@ -2911,7 +2441,6 @@ class Aplicativo(tk.Tk):
             anchor="w"
         )
 
-
         tk.Label(
             conteudo,
             text=titulo,
@@ -2926,7 +2455,6 @@ class Aplicativo(tk.Tk):
             anchor="w"
         )
 
-
         tk.Label(
             conteudo,
             text=descricao,
@@ -2940,7 +2468,6 @@ class Aplicativo(tk.Tk):
             anchor="w",
             pady=(3, 0)
         )
-
 
         tk.Button(
             card,
@@ -2973,11 +2500,9 @@ class Aplicativo(tk.Tk):
 
         dados = []
 
-
         for tarefa in buscar():
 
             dados.append({
-
                 "id": tarefa[0],
                 "titulo": tarefa[1],
                 "responsavel": tarefa[2],
@@ -2986,31 +2511,19 @@ class Aplicativo(tk.Tk):
                 "categoria": tarefa[5],
                 "status": tarefa[6],
                 "criada_em": tarefa[7]
-
             })
 
-
         arquivo = filedialog.asksaveasfilename(
-
             title="Exportar tarefas",
-
             defaultextension=".json",
-
             initialfile="tarefas.json",
-
             filetypes=[
-                (
-                    "Arquivo JSON",
-                    "*.json"
-                )
+                ("Arquivo JSON", "*.json")
             ]
-
         )
-
 
         if not arquivo:
             return
-
 
         with open(
             arquivo,
@@ -3025,7 +2538,6 @@ class Aplicativo(tk.Tk):
                 indent=4
             )
 
-
         messagebox.showinfo(
             "Exportação",
             "Tarefas exportadas com sucesso."
@@ -3039,22 +2551,14 @@ class Aplicativo(tk.Tk):
     def importar(self):
 
         arquivo = filedialog.askopenfilename(
-
             title="Importar tarefas",
-
             filetypes=[
-                (
-                    "Arquivo JSON",
-                    "*.json"
-                )
+                ("Arquivo JSON", "*.json")
             ]
-
         )
-
 
         if not arquivo:
             return
-
 
         try:
 
@@ -3066,14 +2570,11 @@ class Aplicativo(tk.Tk):
 
                 dados = json.load(f)
 
-
             quantidade = 0
-
 
             for tarefa in dados:
 
                 nova = {
-
                     "texto_original": tarefa.get(
                         "texto_original",
                         tarefa.get(
@@ -3118,23 +2619,18 @@ class Aplicativo(tk.Tk):
                             "%d/%m/%Y %H:%M"
                         )
                     )
-
                 }
-
 
                 inserir(nova)
 
                 quantidade += 1
 
-
             self.atualizar_tudo()
-
 
             messagebox.showinfo(
                 "Importação",
                 f"{quantidade} tarefa(s) importada(s)."
             )
-
 
         except Exception as erro:
 
@@ -3151,40 +2647,32 @@ class Aplicativo(tk.Tk):
     def gerar_faker(self):
 
         atividades = [
-
             "entregar o relatório",
             "organizar o documento",
             "preparar a planilha",
             "enviar a proposta para o cliente",
             "finalizar o projeto"
-
         ]
-
 
         for atividade in atividades:
 
             nome = fake.first_name()
-
 
             data = fake.date_between(
                 start_date="+1d",
                 end_date="+30d"
             )
 
-
             texto = (
                 f"{nome} precisa {atividade} "
                 f"até {data.strftime('%d/%m/%Y')}."
             )
 
-
             inserir(
                 interpretar(texto)
             )
 
-
         self.atualizar_tudo()
-
 
         messagebox.showinfo(
             "Faker",
@@ -3193,7 +2681,7 @@ class Aplicativo(tk.Tk):
 
 
     # ========================================================
-    # ATUALIZAR TUDO
+    # ATUALIZAR
     # ========================================================
 
     def atualizar_tudo(self):
@@ -3216,7 +2704,7 @@ class Aplicativo(tk.Tk):
 
 
 # ============================================================
-# INICIAR
+# INICIAR PROGRAMA
 # ============================================================
 
 criar_banco()

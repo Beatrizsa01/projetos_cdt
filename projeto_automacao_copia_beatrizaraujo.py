@@ -630,11 +630,11 @@ class Aplicativo(tk.Tk):
 
         super().__init__()
 
-        self.title("Caixa de Entrada → Ação")
+        self.title("Tarefas Automatizadas → Ação")
 
         self.geometry("1360x820")
 
-        self.minsize(1100, 700)
+        self.minsize(130, 700)
 
         self.configure(bg=FUNDO)
 
