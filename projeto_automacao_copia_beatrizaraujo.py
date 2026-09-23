@@ -72,7 +72,7 @@ def identificar_responsavel(texto):
         r"\bpreciso\s+que\s+(?:o|a)?\s*([A-Za-zÀ-ÿ]+)\s+(?:faça|faca|fazer)\b",
         r"\bquero\s+que\s+(?:o|a)?\s*([A-Za-zÀ-ÿ]+)\s+(?:faça|faca|fazer)\b",
         r"\b(?:o|a)\s+([A-Za-zÀ-ÿ]+)\s+(?:precisa|deve|vai|irá|ira|fica|ficará|ficara)\b",
-        r"\b([A-Za-zÀ-ÿ]+)\s+(?:precisa|deve|vai|irá|ira|fica|ficará|ficara)\b",
+        r"\b([A-Za-zÀ-ÿ]+)\s+(?:precisa|deve|vai|irá|ira|fica|ficará|ficara|feira|tech|organizar|vocação|tecnologia)\b",
         r"\btarefa\s+para\s+(?:o|a)?\s*([A-Za-zÀ-ÿ]+)",
         r"\bpara\s*:\s*([A-Za-zÀ-ÿ]+)",
         r"\bé\s+para\s+(?:o|a)?\s*([A-Za-zÀ-ÿ]+)"
